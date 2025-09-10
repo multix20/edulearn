@@ -1,27 +1,85 @@
-import React from 'react'
-import { Instagram, Facebook, MessageCircle } from 'lucide-react'
+import React from 'react';
+import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 
-const Footer = () => (
-  <footer className="bg-zinc-900 border-t border-amber-600/20 py-12">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center">
-        <div className="text-3xl font-bold text-amber-500 mb-4">ARTEFIERRO</div>
-        <p className="text-zinc-400 mb-6 italic">"Hecho a fuego, pensado con arte."</p>
-        <div className="flex justify-center space-x-6 mb-8">
-          <a href="#" className="text-zinc-400 hover:text-amber-400 transition-colors">
-            <Instagram className="w-6 h-6" />
-          </a>
-          <a href="#" className="text-zinc-400 hover:text-amber-400 transition-colors">
-            <Facebook className="w-6 h-6" />
-          </a>
-          <a href="https://wa.me/56912345678" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-amber-400 transition-colors">
-            <MessageCircle className="w-6 h-6" />
-          </a>
+const Footer = () => {
+  return (
+    <footer className="bg-gray-700 text-white py-12">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Enlaces principales del footer */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          {/* Educational Tools */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">Educational Tools</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Learning Library</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Worksheets</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Games</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Interactive Worksheets</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Worksheet Generator</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Lesson Plans</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Common Core Resources</a></li>
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">Support</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Help center</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Education.com For Schools</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Get a Quote</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Give Gift</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Redeem Gift</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+
+          {/* Connect */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">Connect</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Tell us what you think</a></li>
+            </ul>
+          </div>
+
+          {/* About */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">About</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Company</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Careers</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Press</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Reviews</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">COPPA Privacy Policy</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
+            </ul>
+          </div>
         </div>
-        <div className="text-sm text-zinc-500">© 2025 Artefierro. Todos los derechos reservados.</div>
-      </div>
-    </div>
-  </footer>
-)
 
-export default Footer
+        {/* Redes sociales */}
+        <div className="flex justify-center space-x-4 mb-8">
+          <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <Facebook className="w-5 h-5 text-gray-700" />
+          </a>
+          <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <Instagram className="w-5 h-5 text-gray-700" />
+          </a>
+          <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <Twitter className="w-5 h-5 text-gray-700" />
+          </a>
+          <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <Youtube className="w-5 h-5 text-gray-700" />
+          </a>
+          <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <div className="w-5 h-5 text-gray-700 font-bold text-sm flex items-center justify-center">P</div>
+          </a>
+        </div>    
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
