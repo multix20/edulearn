@@ -39,6 +39,10 @@ const sendTokenResponse = (user, statusCode, res) => {
 // @access  Public
 export const register = async (req, res) => {
   try {
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📝 REGISTER ATTEMPT');
+    console.log('📦 Request Body:', JSON.stringify(req.body, null, 2));
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     const { name, email, password, role } = req.body;
     
     if (!name || !email || !password) {
@@ -61,7 +65,7 @@ export const register = async (req, res) => {
       name,
       email: email.toLowerCase(),
       password,
-      role: role || 'student'
+      role: role || 'teacher'
     });
     
     sendTokenResponse(user, 201, res);
@@ -89,41 +93,59 @@ export const register = async (req, res) => {
 // @access  Public
 export const login = async (req, res) => {
   try {
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('🔐 LOGIN ATTEMPT');
+    console.log('📦 Request Body:', JSON.stringify(req.body, null, 2));
+    console.log('📧 Email:', req.body.email);
+    console.log('🔑 Password exists:', !!req.body.password);
+    console.log('🔑 Password length:', req.body.password?.length);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    
     const { email, password } = req.body;
     
     if (!email || !password) {
+      console.log('❌ Missing email or password');
       return res.status(400).json({
         success: false,
-        message: 'Por favor ingresa email y contraseña'
+        message: 'Por favor proporciona email y contraseña'
       });
     }
     
-    const user = await User.findOne({ email: email.toLowerCase() })
-      .select('+password');
+    // Buscar usuario e incluir password (que está select: false)
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    console.log('👤 User found:', !!user);
     
     if (!user) {
+      console.log('❌ User not found for email:', email);
       return res.status(401).json({
         success: false,
         message: 'Credenciales inválidas'
       });
     }
     
-    const isPasswordValid = await user.comparePassword(password);
+    // Verificar contraseña
+    const isPasswordCorrect = await user.comparePassword(password);
+    console.log('🔐 Password correct:', isPasswordCorrect);
     
-    if (!isPasswordValid) {
+    if (!isPasswordCorrect) {
+      console.log('❌ Password incorrect');
       return res.status(401).json({
         success: false,
         message: 'Credenciales inválidas'
       });
     }
     
+    // Actualizar último login
     user.lastLogin = new Date();
     await user.save();
     
+    console.log('✅ Login successful');
+    
+    // Enviar respuesta con token
     sendTokenResponse(user, 200, res);
     
   } catch (error) {
-    console.error('Error en login:', error);
+    console.error('❌ Error en login:', error);
     res.status(500).json({
       success: false,
       message: 'Error al iniciar sesión'

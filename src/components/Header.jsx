@@ -526,13 +526,17 @@ const Header = () => {
 
       {/* Modal de Registro */}
       <RegisterModal
-        isOpen={isRegisterModalOpen}
-        onClose={() => setIsRegisterModalOpen(false)}
-        onSwitchToLogin={() => {
-          setIsRegisterModalOpen(false);
-          setIsLoginModalOpen(true);
-        }}
-      />
+  isOpen={isRegisterModalOpen}
+  onClose={() => setIsRegisterModalOpen(false)}
+  onSwitchToLogin={() => {
+    setIsRegisterModalOpen(false);
+    setIsLoginModalOpen(true);
+  }}
+  onRegisterSuccess={(userData) => {
+    setUser(userData);  // ⭐ Igual que en handleLoginSubmit
+    setIsRegisterModalOpen(false);
+  }}
+/>
 
       {/* Modal de Datos de Facebook */}
       {isFacebookDataModalOpen && (

@@ -148,5 +148,10 @@ export const getMessage = (key, lang = LOCALIZATION.DEFAULT_LANG, params = {}) =
 };
 
 // Detectar si estamos en desarrollo
-export const isDevelopment = () => import.meta.env.DEV;
-export const isProduction = () => import.meta.env.PROD;
+export const isDevelopment = () => {
+  // Si VITE_USE_REAL_API es true, no usar mock
+  if (import.meta.env.VITE_USE_REAL_API === 'true') {
+    return false;
+  }
+  return import.meta.env.DEV;
+};

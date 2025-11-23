@@ -367,7 +367,7 @@ export class AuthService extends BaseAPI {
     return response;
   }
 
-  async signup(userData) {
+async register(userData) {
     if (isDevelopment()) {
       await new Promise(resolve => setTimeout(resolve, 1200));
       
@@ -378,12 +378,17 @@ export class AuthService extends BaseAPI {
           id: Math.random(),
           name: userData.name,
           email: userData.email,
-          role: userData.role || 'student'
+          role: userData.role || 'teacher',
         }
       };
     }
     
-    return this.post(`${this.endpoints.auth}/signup`, userData);
+    return this.post(`${this.endpoints.auth}/register`, userData);
+  }
+
+  async signup(userData) {
+    // Alias para register
+    return this.register(userData);
   }
 
   async logout() {

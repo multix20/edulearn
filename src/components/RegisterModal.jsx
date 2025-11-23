@@ -3,8 +3,13 @@ import { ValidationUtils } from '../utils';
 import { authService } from '../services/api';
 import facebookService from '../services/facebook';
 
-const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
-  const [registerForm, setRegisterForm] = useState({ email: '', password: '', confirmPassword: '' });
+const RegisterModal = ({ isOpen, onClose, onSwitchToLogin, onRegisterSuccess }) => {
+  const [registerForm, setRegisterForm] = useState({ 
+    name: '',
+    email: '', 
+    password: '', 
+    confirmPassword: '' 
+  });
   const [registerError, setRegisterError] = useState('');
 
   const handleRegisterInputChange = (e) => {
@@ -18,6 +23,11 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setRegisterError('');
+
+    if (!ValidationUtils.isRequired(registerForm.name)) {
+      setRegisterError('El nombre es requerido');
+      return;
+    }
 
     if (!ValidationUtils.isRequired(registerForm.email)) {
       setRegisterError('El email es requerido');
@@ -40,13 +50,29 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
     }
 
     try {
-      const response = await authService.register(registerForm.email, registerForm.password);
+      const response = await authService.register({
+        name: registerForm.name,
+        email: registerForm.email,
+        password: registerForm.password,
+      });
 
       if (response.success) {
-        onClose();
-        setRegisterForm({ email: '', password: '', confirmPassword: '' });
+        // Guardar token y usuario en localStorage
+        if (response.token) {
+          localStorage.setItem('edulearn_token', response.token);
+          localStorage.setItem('edulearn_user', JSON.stringify(response.user));
+        }
+        
+        // Limpiar formulario
+        setRegisterForm({ name: '', email: '', password: '', confirmPassword: '' });
+        
+        // ⭐ Notificar al Header que el registro fue exitoso
+        if (onRegisterSuccess) {
+          onRegisterSuccess(response.user);
+        }
       }
     } catch (err) {
+      console.error('Error en registro:', err);
       setRegisterError('Error al crear la cuenta. Intenta nuevamente.');
     }
   };
@@ -58,7 +84,6 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
         const result = await facebookService.login();
 
         if (result.success) {
-          // Aquí podrías manejar el registro con Facebook
           console.log('Datos de Facebook obtenidos:', result.user);
         } else {
           setRegisterError('Error al registrarse con Facebook');
@@ -68,10 +93,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
         setRegisterError('Error al conectar con Facebook');
       }
     } else if (provider === 'google') {
-      // Simulamos un registro con Google (sin login automático)
       console.log('Registrándose con Google...');
-
-      // Simular un delay de registro
       setTimeout(() => {
         onClose();
         console.log('Registro con Google completado. Por favor, confirma tu cuenta.');
@@ -103,12 +125,22 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
 
         <form onSubmit={handleRegisterSubmit} className="space-y-3">
           <input
+            type="text"
+            name="name"
+            value={registerForm.name}
+            onChange={handleRegisterInputChange}
+            className="w-full px-4 py-3 bg-gray-100/80 backdrop-blur-sm border-2 border-transparent rounded-xl focus:outline-none focus:border-violet-400 focus:bg-white transition-all duration-300 text-sm"
+            placeholder="Tu nombre completo"
+            required
+          />
+          
+          <input
             type="email"
             name="email"
             value={registerForm.email}
             onChange={handleRegisterInputChange}
             className="w-full px-4 py-3 bg-gray-100/80 backdrop-blur-sm border-2 border-transparent rounded-xl focus:outline-none focus:border-violet-400 focus:bg-white transition-all duration-300 text-sm"
-            placeholder="jp.devtravel@gmail.com"
+            placeholder="tu@email.com"
             required
           />
 
@@ -159,7 +191,6 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
           </button>
         </div>
 
-        {/* Términos y condiciones compactos */}
         <div className="mt-3 text-center text-xs text-gray-500">
           <p>Al crear cuenta, acepto los <a href="#" className="text-violet-600 hover:underline">Términos de Uso</a> y <a href="#" className="text-violet-600 hover:underline">Política de Privacidad</a>.</p>
         </div>
@@ -168,4 +199,4 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
   );
 };
 
-export default RegisterModal;
+export default RegisterModal; 
