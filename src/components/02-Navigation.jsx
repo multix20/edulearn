@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Menu, X, BookOpen, GraduationCap, FileText, Gamepad2, Sparkles } from 'lucide-react'
 
 const Navigation = () => {
