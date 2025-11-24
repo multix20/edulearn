@@ -1,6 +1,6 @@
-# 📚 EduLearn Platform
+# 📚 EduLearn
 
-> Plataforma educativa interactiva para crear, compartir y gestionar recursos educativos
+> Plataforma educativa para compartir y acceder a hojas de trabajo y recursos didácticos
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18.2-blue.svg)](https://reactjs.org/)
@@ -9,15 +9,16 @@
 
 ## 🚀 Características
 
-- ✨ Sistema completo de autenticación (local + OAuth)
-- 📝 CRUD de fichas de trabajo educativas
-- 👥 Roles de usuario (estudiante, profesor, padre, admin)
-- 🎮 Gamificación con puntos y niveles
-- ⭐ Sistema de favoritos y colecciones
-- 🔍 Búsqueda avanzada con filtros
-- 📊 Estadísticas de uso y progreso
-- 💬 Sistema de comentarios y valoraciones
-- 🎨 Interfaz moderna con Tailwind CSS
+- ✨ Sistema de autenticación completo (local + OAuth con Facebook)
+- 📝 Gestión completa de hojas de trabajo (CRUD)
+- 👥 Roles de usuario (profesor, administrador)
+- ⭐ Sistema de calificaciones y reseñas
+- 🔍 Búsqueda y filtrado por materia, grado y dificultad
+- 📊 Estadísticas de uso (vistas, descargas, favoritos)
+- 🎯 Recursos organizados por objetivos de aprendizaje
+- 📁 Soporte para archivos PDF con miniaturas
+- 👤 Perfiles de usuario con estadísticas personales
+- 📚 Biblioteca de recursos educativos
 
 ## 🛠️ Stack Tecnológico
 
@@ -33,6 +34,7 @@
 - **MongoDB + Mongoose** - Base de datos
 - **JWT** - Autenticación
 - **Bcrypt** - Hashing de contraseñas
+- **CORS** - Cross-origin resource sharing
 
 ## 📋 Requisitos Previos
 
@@ -44,8 +46,8 @@
 
 1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/TU_USUARIO/edulearn-platform.git
-cd edulearn-platform
+git clone https://github.com/TU_USUARIO/edulearn.git
+cd edulearn
 ```
 
 2. **Instalar dependencias del frontend**
@@ -119,7 +121,7 @@ npm start
 ## 📁 Estructura del Proyecto
 
 ```
-edulearn-platform/
+edulearn/
 ├── backend/
 │   ├── src/
 │   │   ├── controllers/     # Lógica de negocio
@@ -153,11 +155,11 @@ edulearn-platform/
 - `POST /api/users/:id/favorites` - Agregar favorito
 
 ### Worksheets
-- `GET /api/worksheets` - Listar fichas
-- `POST /api/worksheets` - Crear ficha
-- `GET /api/worksheets/:id` - Obtener ficha
-- `PUT /api/worksheets/:id` - Actualizar ficha
-- `DELETE /api/worksheets/:id` - Eliminar ficha
+- `GET /api/worksheets` - Listar hojas de trabajo
+- `POST /api/worksheets` - Crear hoja de trabajo
+- `GET /api/worksheets/:id` - Obtener hoja de trabajo
+- `PUT /api/worksheets/:id` - Actualizar hoja de trabajo
+- `DELETE /api/worksheets/:id` - Eliminar hoja de trabajo
 - `POST /api/worksheets/:id/rate` - Calificar
 
 Ver documentación completa en [CLAUDE_CONTEXT.md](CLAUDE_CONTEXT.md)
@@ -218,7 +220,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ## 📞 Soporte
 
 Si tienes preguntas o problemas:
-- Abre un [Issue](https://github.com/TU_USUARIO/edulearn-platform/issues)
+- Abre un [Issue](https://github.com/TU_USUARIO/edulearn/issues)
 - Revisa la [Documentación Completa](CLAUDE_CONTEXT.md)
 
 ---

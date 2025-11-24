@@ -6,27 +6,27 @@ const Hero = ({
 }) => {
 
   return (
-    <section className="relative overflow-hidden min-h-screen bg-gradient-to-br from-sky-300 via-sky-400 to-teal-400">
+    <section className="relative overflow-hidden min-h-[600px] sm:min-h-[700px] md:min-h-screen bg-gradient-to-br from-sky-300 via-sky-400 to-teal-400">
       {/* Nubes decorativas */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-32 h-20 bg-white bg-opacity-80 rounded-full blur-sm"></div>
-        <div className="absolute top-32 left-40 w-24 h-16 bg-white bg-opacity-70 rounded-full blur-sm"></div>
-        <div className="absolute top-10 right-20 w-40 h-24 bg-white bg-opacity-75 rounded-full blur-sm"></div>
-        <div className="absolute top-40 right-40 w-28 h-18 bg-white bg-opacity-60 rounded-full blur-sm"></div>
-        <div className="absolute bottom-40 left-20 w-36 h-22 bg-white bg-opacity-70 rounded-full blur-sm"></div>
+        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-20 sm:w-32 h-12 sm:h-20 bg-white bg-opacity-80 rounded-full blur-sm"></div>
+        <div className="absolute top-20 sm:top-32 left-20 sm:left-40 w-16 sm:w-24 h-10 sm:h-16 bg-white bg-opacity-70 rounded-full blur-sm"></div>
+        <div className="absolute top-10 right-10 sm:right-20 w-24 sm:w-40 h-16 sm:h-24 bg-white bg-opacity-75 rounded-full blur-sm"></div>
+        <div className="absolute top-32 sm:top-40 right-20 sm:right-40 w-20 sm:w-28 h-14 sm:h-18 bg-white bg-opacity-60 rounded-full blur-sm"></div>
+        <div className="absolute bottom-40 left-10 sm:left-20 w-24 sm:w-36 h-16 sm:h-22 bg-white bg-opacity-70 rounded-full blur-sm"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-20 flex items-center min-h-screen">
-        <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 flex items-center min-h-[600px] sm:min-h-[700px] md:min-h-screen">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center w-full">
           {/* Contenido de texto */}
-          <div className="text-left max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white drop-shadow-lg leading-tight">
+          <div className="text-left max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white drop-shadow-lg leading-tight">
               {title}
             </h1>
-            <p className="text-lg md:text-xl mb-8 text-white drop-shadow-md leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-white drop-shadow-md leading-relaxed max-w-xl mx-auto lg:mx-0">
               {description}
             </p>
-            <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+            <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-base sm:text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform w-full sm:w-auto">
               Únete gratis
             </button>
           </div>
@@ -128,11 +128,11 @@ const Hero = ({
       </div>
 
       {/* Decoraciones adicionales en mobile */}
-      <div className="lg:hidden absolute bottom-10 right-5">
-        <div className="w-16 h-16 bg-orange-400 rounded-full relative">
-          <div className="absolute top-2 left-3 w-3 h-3 bg-white rounded-full"></div>
-          <div className="absolute top-2 right-3 w-3 h-3 bg-white rounded-full"></div>
-          <div className="absolute top-6 left-1 right-1 h-6 bg-orange-600 rounded-full"></div>
+      <div className="lg:hidden absolute bottom-10 right-5 sm:right-10">
+        <div className="w-12 sm:w-16 h-12 sm:h-16 bg-orange-400 rounded-full relative animate-bounce">
+          <div className="absolute top-1.5 sm:top-2 left-2 sm:left-3 w-2 sm:w-3 h-2 sm:h-3 bg-white rounded-full"></div>
+          <div className="absolute top-1.5 sm:top-2 right-2 sm:right-3 w-2 sm:w-3 h-2 sm:h-3 bg-white rounded-full"></div>
+          <div className="absolute top-4 sm:top-6 left-1 right-1 h-4 sm:h-6 bg-orange-600 rounded-full"></div>
         </div>
       </div>
     </section>
