@@ -7,9 +7,14 @@ import CommunityComponent from './components/05-CommunityComponent'
 import GetAccess from './components/06-GetAccess'
 import Worksheet from './components/07-Worksheet'
 import Footer from './components/08-Footer'
+import Subjects from './components/09-Subjects'
+import Courses from './components/10-Courses'
+import Games from './components/11-Games'
+import Resources from './components/12-Resources'
 
 const App = () => {
   const [user, setUser] = useState(null)
+  const [activeSection, setActiveSection] = useState('Fichas de Trabajo')
 
   // Verificar si hay un usuario en localStorage al cargar la aplicación
   useEffect(() => {
@@ -52,6 +57,24 @@ const App = () => {
     console.log('🔍 Estado del usuario actualizado:', user)
   }, [user])
 
+  // Función para renderizar la sección activa
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case 'Asignaturas':
+        return <Subjects />
+      case 'Cursos':
+        return <Courses />
+      case 'Fichas de Trabajo':
+        return <Worksheet />
+      case 'Juegos':
+        return <Games />
+      case 'Más Recursos':
+        return <Resources />
+      default:
+        return <Worksheet />
+    }
+  }
+
   return (
     <div>
       <Header user={user} setUser={setUser} />
@@ -60,13 +83,13 @@ const App = () => {
       {user ? (
         // ===== VISTA DE USUARIO AUTENTICADO =====
         <>
-          <Navigation />
-          <Worksheet />
+          <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+          {renderActiveSection()}
         </>
       ) : (
         // ===== VISTA DE LANDING PAGE (NO AUTENTICADO) =====
         <>
-          <Navigation />
+          <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
           <Hero />
           <LearningLibrary />
           <CommunityComponent />

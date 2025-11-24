@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Menu, X, BookOpen, GraduationCap, FileText, Gamepad2, Sparkles } from 'lucide-react'
 
-const Navigation = () => {
+const Navigation = ({ activeSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const menuItems = [
@@ -14,12 +14,12 @@ const Navigation = () => {
 
   // Función para manejar el click en los items del menú
   const handleMenuClick = (itemName) => {
-    if (itemName === 'Fichas de Trabajo') {
-      const worksheetSection = document.getElementById('worksheet')
-      if (worksheetSection) {
-        worksheetSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }
+    // Cambiar la sección activa
+    setActiveSection(itemName)
+
+    // Hacer scroll suave al inicio de la página
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     // Cerrar menú móvil después del click
     setIsMenuOpen(false)
   }
@@ -31,7 +31,7 @@ const Navigation = () => {
         <div className="hidden md:flex justify-center items-center gap-2 lg:gap-4 py-3">
           {menuItems.map((item, index) => {
             const Icon = item.icon
-            const isActive = item.name === 'Fichas de Trabajo'
+            const isActive = activeSection === item.name
 
             return (
               <button
@@ -87,7 +87,7 @@ const Navigation = () => {
             <div className="pb-4 space-y-2 animate-in slide-in-from-top-2 duration-300">
               {menuItems.map((item, index) => {
                 const Icon = item.icon
-                const isActive = item.name === 'Fichas de Trabajo'
+                const isActive = activeSection === item.name
 
                 return (
                   <button
