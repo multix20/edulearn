@@ -5,9 +5,9 @@ import { getMessage } from '../config';
 import { authService } from '../services/api';
 import { ValidationUtils } from '../utils';
 import facebookService from '../services/facebook';
-import RegisterModal from './RegisterModal';
+import RegisterModal from './01-RegisterModal';
 
-const Header = () => {
+const Header = ({ user, setUser }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isFacebookDataModalOpen, setIsFacebookDataModalOpen] = useState(false);
@@ -15,7 +15,6 @@ const Header = () => {
   const [facebookDataForm, setFacebookDataForm] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loginError, setLoginError] = useState('');
   const [facebookDataError, setFacebookDataError] = useState('');
-  const [user, setUser] = useState(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [facebookUserData, setFacebookUserData] = useState(null);
@@ -48,6 +47,16 @@ const Header = () => {
     }
   };
 
+  // Función para hacer scroll suave al Worksheet después de login/registro
+  const scrollToWorksheet = () => {
+    setTimeout(() => {
+      const worksheetSection = document.getElementById('worksheet');
+      if (worksheetSection) {
+        worksheetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 300); // Pequeño delay para que el modal se cierre primero
+  };
+
   // Manejar login
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -70,13 +79,16 @@ const Header = () => {
 
     try {
       const response = await authService.login(loginForm.email, loginForm.password);
-      
+
       if (response.success) {
+        console.log('✅ Login exitoso, actualizando usuario:', response.user);
         setUser(response.user);
         setIsLoginModalOpen(false);
         setLoginForm({ email: '', password: '' });
+        scrollToWorksheet(); // 🎯 Hacer scroll al Worksheet
       }
     } catch (err) {
+      console.error('❌ Error en login:', err);
       setLoginError('Error al iniciar sesión. Intenta nuevamente.');
     }
   };
@@ -533,8 +545,10 @@ const Header = () => {
     setIsLoginModalOpen(true);
   }}
   onRegisterSuccess={(userData) => {
+    console.log('✅ Registro exitoso, actualizando usuario:', userData);
     setUser(userData);  // ⭐ Igual que en handleLoginSubmit
     setIsRegisterModalOpen(false);
+    scrollToWorksheet(); // 🎯 Hacer scroll al Worksheet
   }}
 />
 

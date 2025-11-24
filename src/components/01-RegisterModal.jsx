@@ -57,16 +57,10 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin, onRegisterSuccess }) 
       });
 
       if (response.success) {
-        // Guardar token y usuario en localStorage
-        if (response.token) {
-          localStorage.setItem('edulearn_token', response.token);
-          localStorage.setItem('edulearn_user', JSON.stringify(response.user));
-        }
-        
         // Limpiar formulario
         setRegisterForm({ name: '', email: '', password: '', confirmPassword: '' });
-        
-        // ⭐ Notificar al Header que el registro fue exitoso
+
+        // ⭐ Notificar al componente padre que el registro fue exitoso
         if (onRegisterSuccess) {
           onRegisterSuccess(response.user);
         }

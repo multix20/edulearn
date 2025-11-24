@@ -370,20 +370,40 @@ export class AuthService extends BaseAPI {
 async register(userData) {
     if (isDevelopment()) {
       await new Promise(resolve => setTimeout(resolve, 1200));
-      
-      return {
+
+      const mockResponse = {
         success: true,
         message: 'Usuario registrado exitosamente',
+        token: 'mock_token_' + Math.random().toString(36).substring(7),
         user: {
           id: Math.random(),
           name: userData.name,
           email: userData.email,
-          role: userData.role || 'teacher',
+          role: userData.role || 'student',
+          avatar: '/images/avatar-default.jpg',
+          stats: {
+            worksheetsCompleted: 0,
+            gamesPlayed: 0,
+            points: 0,
+            level: 1
+          }
         }
       };
+
+      localStorage.setItem('edulearn_token', mockResponse.token);
+      localStorage.setItem('edulearn_user', JSON.stringify(mockResponse.user));
+
+      return mockResponse;
     }
-    
-    return this.post(`${this.endpoints.auth}/register`, userData);
+
+    const response = await this.post(`${this.endpoints.auth}/register`, userData);
+
+    if (response.token) {
+      localStorage.setItem('edulearn_token', response.token);
+      localStorage.setItem('edulearn_user', JSON.stringify(response.user));
+    }
+
+    return response;
   }
 
   async signup(userData) {

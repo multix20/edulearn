@@ -6,7 +6,7 @@ const Hero = ({
 }) => {
 
   return (
-    <section className="relative overflow-hidden min-h-[600px] sm:min-h-[700px] md:min-h-screen bg-gradient-to-br from-sky-300 via-sky-400 to-teal-400">
+    <section id="hero" className="relative overflow-hidden min-h-[600px] sm:min-h-[700px] md:min-h-screen bg-gradient-to-br from-sky-300 via-sky-400 to-teal-400">
       {/* Nubes decorativas */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-20 sm:w-32 h-12 sm:h-20 bg-white bg-opacity-80 rounded-full blur-sm"></div>
