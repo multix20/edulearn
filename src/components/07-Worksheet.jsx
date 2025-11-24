@@ -8,7 +8,7 @@ const Worksheet = () => {
         {/* Encabezado */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-            Mis Hojas de Trabajo
+            Mis Fichas de Trabajo
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             Explora y completa ejercicios interactivos para mejorar tus habilidades
@@ -34,7 +34,7 @@ const Worksheet = () => {
           <div className="relative w-full sm:w-64">
             <input
               type="text"
-              placeholder="Buscar hojas..."
+              placeholder="Buscar fichas..."
               className="w-full px-4 py-2 pl-10 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-violet-400 transition-all duration-200"
             />
             <svg className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,9 +43,9 @@ const Worksheet = () => {
           </div>
         </div>
 
-        {/* Grid de hojas de trabajo */}
+        {/* Grid de fichas de trabajo */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Tarjeta de hoja de trabajo 1 */}
+          {/* Tarjeta de ficha de trabajo 1 */}
           <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer border border-gray-100">
             <div className="h-32 bg-gradient-to-br from-violet-400 to-purple-500 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-all duration-300"></div>
@@ -240,7 +240,7 @@ const Worksheet = () => {
               <div className="w-20 h-20 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-3xl font-bold text-white">12</span>
               </div>
-              <p className="text-gray-600 font-medium">Hojas completadas</p>
+              <p className="text-gray-600 font-medium">Fichas completadas</p>
             </div>
             <div className="text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-3">

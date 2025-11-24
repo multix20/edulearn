@@ -4,11 +4,11 @@ import { Menu, X } from 'lucide-react'
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const menuItems = ['Asignaturas', 'Cursos', 'Hojas de Trabajo', 'Juegos', 'Más Recursos']
+  const menuItems = ['Asignaturas', 'Cursos', 'Fichas de Trabajo', 'Juegos', 'Más Recursos']
 
   // Función para manejar el click en los items del menú
   const handleMenuClick = (item) => {
-    if (item === 'Hojas de Trabajo') {
+    if (item === 'Fichas de Trabajo') {
       const worksheetSection = document.getElementById('worksheet')
       if (worksheetSection) {
         worksheetSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -28,7 +28,7 @@ const Navigation = () => {
               key={index}
               onClick={() => handleMenuClick(item)}
               className={`nav-item font-medium px-3 lg:px-4 py-2 rounded transition text-sm lg:text-base ${
-                item === 'Hojas de Trabajo'
+                item === 'Fichas de Trabajo'
                   ? 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer'
                   : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-500'
               }`}
@@ -62,7 +62,7 @@ const Navigation = () => {
                 <button
                   key={index}
                   className={`w-full text-left nav-item font-medium px-4 py-3 rounded transition ${
-                    item === 'Hojas de Trabajo'
+                    item === 'Fichas de Trabajo'
                       ? 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'
                       : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-500'
                   }`}
