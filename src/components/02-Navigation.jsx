@@ -6,6 +6,18 @@ const Navigation = () => {
 
   const menuItems = ['Asignaturas', 'Cursos', 'Hojas de Trabajo', 'Juegos', 'Más Recursos']
 
+  // Función para manejar el click en los items del menú
+  const handleMenuClick = (item) => {
+    if (item === 'Hojas de Trabajo') {
+      const worksheetSection = document.getElementById('worksheet')
+      if (worksheetSection) {
+        worksheetSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+    // Cerrar menú móvil después del click
+    setIsMenuOpen(false)
+  }
+
   return (
     <nav className="bg-white border-t border-gray-200 sticky top-20 z-40">
       <div className="max-w-6xl mx-auto px-4 sm:px-5">
@@ -14,7 +26,12 @@ const Navigation = () => {
           {menuItems.map((item, index) => (
             <button
               key={index}
-              className="nav-item font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-500 px-3 lg:px-4 py-2 rounded transition text-sm lg:text-base"
+              onClick={() => handleMenuClick(item)}
+              className={`nav-item font-medium px-3 lg:px-4 py-2 rounded transition text-sm lg:text-base ${
+                item === 'Hojas de Trabajo'
+                  ? 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer'
+                  : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-500'
+              }`}
             >
               {item}
             </button>
@@ -44,8 +61,12 @@ const Navigation = () => {
               {menuItems.map((item, index) => (
                 <button
                   key={index}
-                  className="w-full text-left nav-item font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-500 px-4 py-3 rounded transition"
-                  onClick={() => setIsMenuOpen(false)}
+                  className={`w-full text-left nav-item font-medium px-4 py-3 rounded transition ${
+                    item === 'Hojas de Trabajo'
+                      ? 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'
+                      : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-500'
+                  }`}
+                  onClick={() => handleMenuClick(item)}
                 >
                   {item}
                 </button>
