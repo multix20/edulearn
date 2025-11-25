@@ -12,6 +12,7 @@ dotenv.config();
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import worksheetRoutes from './routes/worksheet.routes.js';
+import downloadRoutes from './routes/download.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -35,6 +36,7 @@ app.use(cors({
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/worksheets', worksheetRoutes);
+app.use('/api/download', downloadRoutes);
 
 // Ruta de prueba
 app.get('/api/health', (req, res) => {
