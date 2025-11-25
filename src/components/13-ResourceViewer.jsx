@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Filter, BookOpen, GraduationCap, FileText } from 'lucide-react';
+import { Filter, BookOpen, GraduationCap, FileText, ChevronRight, Home } from 'lucide-react';
 import FilterSidebar from './FilterSidebar';
 
 const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null }) => {
@@ -14,8 +14,20 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null }) => {
   React.useEffect(() => {
     if (initialFilter) {
       setSelectedCategory(initialFilter);
+    } else {
+      // Si initialFilter es null, resetear a 'Todas'
+      setSelectedCategory('Todas');
     }
   }, [initialFilter]);
+
+  // Resetear filtros cuando cambia el viewMode
+  React.useEffect(() => {
+    if (!initialFilter) {
+      setSelectedCategory('Todas');
+      setSelectedGrade('Todos');
+      setSearchQuery('');
+    }
+  }, [viewMode, initialFilter]);
 
   // Configuración según el modo de vista
   const viewConfig = {
@@ -227,6 +239,29 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null }) => {
 
         {/* Contenido Principal */}
         <div className="flex-1 min-w-0">
+          {/* Breadcrumbs - Similar a education.com */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <Home className="w-4 h-4" />
+              <ChevronRight className="w-3 h-3" />
+              <span className="font-medium text-gray-900">
+                {viewMode === 'asignaturas' ? 'Asignaturas' : viewMode === 'cursos' ? 'Cursos' : 'Fichas de Trabajo'}
+              </span>
+              {selectedCategory !== 'Todas' && (
+                <>
+                  <ChevronRight className="w-3 h-3" />
+                  <span className="text-violet-600 font-semibold">{selectedCategory}</span>
+                </>
+              )}
+              {selectedGrade !== 'Todos' && (
+                <>
+                  <ChevronRight className="w-3 h-3" />
+                  <span className="text-violet-600 font-semibold">{selectedGrade}</span>
+                </>
+              )}
+            </div>
+          </div>
+
           {/* Encabezado */}
           <div className="text-center mb-10">
             <div className={`inline-flex items-center gap-2 ${config.iconBg} px-4 py-2 rounded-full text-sm font-semibold mb-4`}>
@@ -234,7 +269,13 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null }) => {
               <span>{viewMode === 'asignaturas' ? 'Explora por Asignaturas' : viewMode === 'cursos' ? 'Cursos Estructurados' : 'Recursos para Profesores'}</span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-              {config.title}
+              {selectedGrade !== 'Todos' && selectedCategory !== 'Todas'
+                ? `${selectedCategory} - ${selectedGrade}`
+                : selectedCategory !== 'Todas'
+                ? `Fichas de ${selectedCategory}`
+                : selectedGrade !== 'Todos'
+                ? `${selectedGrade} - Todas las Asignaturas`
+                : config.title}
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-6">
               {config.subtitle}
