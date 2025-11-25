@@ -1,15 +1,48 @@
 import React, { useState } from 'react'
-import { Menu, X, BookOpen, GraduationCap, FileText, Gamepad2, Sparkles } from 'lucide-react'
+import { Menu, X, BookOpen, GraduationCap, FileText, Gamepad2, Sparkles, ChevronDown } from 'lucide-react'
 
 const Navigation = ({ activeSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [hoveredMenu, setHoveredMenu] = useState(null)
 
   const menuItems = [
-    { name: 'Asignaturas', icon: BookOpen },
-    { name: 'Cursos', icon: GraduationCap },
-    { name: 'Fichas de Trabajo', icon: FileText },
-    { name: 'Juegos', icon: Gamepad2 },
-    { name: 'Más Recursos', icon: Sparkles }
+    {
+      name: 'Asignaturas',
+      icon: BookOpen,
+      hasDropdown: true,
+      dropdownItems: [
+        'Math',
+        'English Language Arts',
+        'Science',
+        'Social Studies',
+        'Foreign Language'
+      ]
+    },
+    {
+      name: 'Cursos',
+      icon: GraduationCap,
+      hasDropdown: true,
+      dropdownItems: [
+        'Math',
+        'English Language Arts',
+        'Science',
+        'Social Studies'
+      ]
+    },
+    {
+      name: 'Fichas de Trabajo',
+      icon: FileText,
+      hasDropdown: true,
+      dropdownItems: [
+        'Math',
+        'Reading & Writing',
+        'Science',
+        'Social Studies',
+        'Arts & Music'
+      ]
+    },
+    { name: 'Juegos', icon: Gamepad2, hasDropdown: false },
+    { name: 'Más Recursos', icon: Sparkles, hasDropdown: false }
   ]
 
   // Función para manejar el click en los items del menú
@@ -22,6 +55,14 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 
     // Cerrar menú móvil después del click
     setIsMenuOpen(false)
+    setHoveredMenu(null)
+  }
+
+  const handleDropdownItemClick = (parentMenu, item) => {
+    console.log(`Clicked ${item} from ${parentMenu}`)
+    setActiveSection(parentMenu)
+    setHoveredMenu(null)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -32,20 +73,45 @@ const Navigation = ({ activeSection, setActiveSection }) => {
           {menuItems.map((item, index) => {
             const Icon = item.icon
             const isActive = activeSection === item.name
+            const isHovered = hoveredMenu === item.name
 
             return (
-              <button
+              <div
                 key={index}
-                onClick={() => handleMenuClick(item.name)}
-                className={`flex items-center gap-2 px-4 lg:px-6 py-3 rounded-xl font-semibold text-sm lg:text-base transition-colors duration-200 ${
-                  isActive
-                    ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
-                    : 'text-gray-700 hover:bg-violet-50 hover:text-violet-700'
-                }`}
+                className="relative"
+                onMouseEnter={() => item.hasDropdown && setHoveredMenu(item.name)}
+                onMouseLeave={() => setHoveredMenu(null)}
               >
-                <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
-                <span>{item.name}</span>
-              </button>
+                <button
+                  onClick={() => !item.hasDropdown && handleMenuClick(item.name)}
+                  className={`flex items-center gap-2 px-4 lg:px-6 py-3 rounded-xl font-semibold text-sm lg:text-base transition-colors duration-200 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
+                      : 'text-gray-700 hover:bg-violet-50 hover:text-violet-700'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
+                  <span>{item.name}</span>
+                  {item.hasDropdown && (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </button>
+
+                {/* Dropdown Menu */}
+                {item.hasDropdown && isHovered && (
+                  <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-xl py-2 z-50">
+                    {item.dropdownItems.map((dropdownItem, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleDropdownItemClick(item.name, dropdownItem)}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-violet-50 hover:text-violet-700 transition-colors"
+                      >
+                        {dropdownItem}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             )
           })}
         </div>
