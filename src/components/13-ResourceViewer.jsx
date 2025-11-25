@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Filter, BookOpen, GraduationCap, FileText, ChevronRight, Home, X } from 'lucide-react';
 import FilterSidebar from './FilterSidebar';
+import EmailCaptureModal from './EmailCaptureModal';
 
 const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null, user = null }) => {
   const [selectedCategory, setSelectedCategory] = useState(initialFilter || 'Todas');
@@ -9,6 +10,8 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null, user = null
   const [activeFilters, setActiveFilters] = useState({});
   const [sortBy, setSortBy] = useState('popular');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFicha, setSelectedFicha] = useState(null);
+  const [showEmailModal, setShowEmailModal] = useState(false);
 
   // Determinar límite de fichas según el tipo de usuario
   const getWorksheetLimit = () => {
@@ -209,6 +212,11 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null, user = null
     });
   };
 
+  const handleDownloadClick = (ficha) => {
+    setSelectedFicha(ficha);
+    setShowEmailModal(true);
+  };
+
   // Filtrado de fichas
   const filteredFichas = fichas.filter(ficha => {
     const categoryMatch = selectedCategory === 'Todas' || ficha.subject === selectedCategory;
@@ -329,7 +337,7 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null, user = null
               {sortedFichas.map((ficha) => (
                 <div
                   key={ficha.id}
-                  className="bg-white rounded-lg shadow hover:shadow-lg transition-all duration-200 overflow-hidden cursor-pointer border border-gray-200 hover:border-blue-400"
+                  className="bg-white rounded-lg shadow hover:shadow-lg transition-all duration-200 overflow-hidden border border-gray-200 hover:border-blue-400 group"
                 >
                   {/* Thumbnail */}
                   <div className={`h-48 bg-gradient-to-br ${getColorClasses(ficha.color).split(' ')[0]} ${getColorClasses(ficha.color).split(' ')[1]} relative overflow-hidden`}>
@@ -346,6 +354,19 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null, user = null
                         {ficha.badge}
                       </div>
                     )}
+
+                    {/* Botón de descarga (aparece en hover) */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <button
+                        onClick={() => handleDownloadClick(ficha)}
+                        className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold shadow-lg hover:bg-blue-50 transition-colors flex items-center gap-2"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Descargar
+                      </button>
+                    </div>
                   </div>
 
                   {/* Contenido */}
@@ -375,6 +396,16 @@ const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null, user = null
           </button>
         </div>
       </div>
+
+      {/* Modal de captura de email */}
+      <EmailCaptureModal
+        ficha={selectedFicha}
+        isOpen={showEmailModal}
+        onClose={() => {
+          setShowEmailModal(false);
+          setSelectedFicha(null);
+        }}
+      />
     </div>
   );
 };
