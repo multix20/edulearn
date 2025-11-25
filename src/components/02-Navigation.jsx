@@ -83,11 +83,11 @@ const Navigation = ({ activeSection, setActiveSection }) => {
                 onMouseLeave={() => setHoveredMenu(null)}
               >
                 <button
-                  onClick={() => !item.hasDropdown && handleMenuClick(item.name)}
+                  onClick={() => handleMenuClick(item.name)}
                   className={`flex items-center gap-2 px-4 lg:px-6 py-3 rounded-xl font-semibold text-sm lg:text-base transition-colors duration-200 ${
                     isActive
                       ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
-                      : 'text-gray-700 hover:bg-violet-50 hover:text-violet-700'
+                      : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
                   <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
@@ -104,7 +104,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
                       <button
                         key={idx}
                         onClick={() => handleDropdownItemClick(item.name, dropdownItem)}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-violet-50 hover:text-violet-700 transition-colors"
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       >
                         {dropdownItem}
                       </button>
@@ -149,7 +149,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
                     className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl font-semibold text-sm transition-colors duration-200 ${
                       isActive
                         ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
-                        : 'bg-white text-gray-700 hover:bg-violet-50 hover:text-violet-700 border border-gray-200'
+                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                     }`}
                     onClick={() => handleMenuClick(item.name)}
                   >

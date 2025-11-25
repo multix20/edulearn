@@ -5,10 +5,8 @@ import Hero from './components/03-Hero'
 import LearningLibrary from './components/04-LearningLibrary'
 import CommunityComponent from './components/05-CommunityComponent'
 import GetAccess from './components/06-GetAccess'
-import Worksheet from './components/07-Worksheet'
 import Footer from './components/08-Footer'
-import Subjects from './components/09-Subjects'
-import Courses from './components/10-Courses'
+import ResourceViewer from './components/13-ResourceViewer'
 import Games from './components/11-Games'
 import Resources from './components/12-Resources'
 
@@ -61,17 +59,17 @@ const App = () => {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'Asignaturas':
-        return <Subjects />
+        return <ResourceViewer viewMode="asignaturas" />
       case 'Cursos':
-        return <Courses />
+        return <ResourceViewer viewMode="cursos" />
       case 'Fichas de Trabajo':
-        return <Worksheet />
+        return <ResourceViewer viewMode="fichas" />
       case 'Juegos':
         return <Games />
       case 'Más Recursos':
         return <Resources />
       default:
-        return <Worksheet />
+        return <ResourceViewer viewMode="fichas" />
     }
   }
 
