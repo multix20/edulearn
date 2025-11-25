@@ -13,6 +13,7 @@ import Resources from './components/12-Resources'
 const App = () => {
   const [user, setUser] = useState(null)
   const [activeSection, setActiveSection] = useState('Fichas de Trabajo')
+  const [selectedFilter, setSelectedFilter] = useState(null) // Filtro desde Navigation dropdown
 
   // Verificar si hay un usuario en localStorage al cargar la aplicación
   useEffect(() => {
@@ -59,17 +60,17 @@ const App = () => {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'Asignaturas':
-        return <ResourceViewer viewMode="asignaturas" />
+        return <ResourceViewer viewMode="asignaturas" initialFilter={selectedFilter} />
       case 'Cursos':
-        return <ResourceViewer viewMode="cursos" />
+        return <ResourceViewer viewMode="cursos" initialFilter={selectedFilter} />
       case 'Fichas de Trabajo':
-        return <ResourceViewer viewMode="fichas" />
+        return <ResourceViewer viewMode="fichas" initialFilter={selectedFilter} />
       case 'Juegos':
         return <Games />
       case 'Más Recursos':
         return <Resources />
       default:
-        return <ResourceViewer viewMode="fichas" />
+        return <ResourceViewer viewMode="fichas" initialFilter={selectedFilter} />
     }
   }
 
@@ -81,13 +82,21 @@ const App = () => {
       {user ? (
         // ===== VISTA DE USUARIO AUTENTICADO =====
         <>
-          <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+          <Navigation
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+            setSelectedFilter={setSelectedFilter}
+          />
           {renderActiveSection()}
         </>
       ) : (
         // ===== VISTA DE LANDING PAGE (NO AUTENTICADO) =====
         <>
-          <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+          <Navigation
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+            setSelectedFilter={setSelectedFilter}
+          />
           <Hero />
           <LearningLibrary />
           <CommunityComponent />

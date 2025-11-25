@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Menu, X, BookOpen, GraduationCap, FileText, Gamepad2, Sparkles, ChevronDown } from 'lucide-react'
 
-const Navigation = ({ activeSection, setActiveSection }) => {
+const Navigation = ({ activeSection, setActiveSection, setSelectedFilter }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredMenu, setHoveredMenu] = useState(null)
 
@@ -45,10 +45,26 @@ const Navigation = ({ activeSection, setActiveSection }) => {
     { name: 'Más Recursos', icon: Sparkles, hasDropdown: false }
   ]
 
+  // Mapeo de nombres en inglés a español
+  const subjectMapping = {
+    'Math': 'Matemáticas',
+    'English Language Arts': 'Lenguaje',
+    'Science': 'Ciencias',
+    'Social Studies': 'Estudios Sociales',
+    'Foreign Language': 'Lenguaje',
+    'Reading & Writing': 'Lenguaje',
+    'Arts & Music': 'Arte'
+  }
+
   // Función para manejar el click en los items del menú
   const handleMenuClick = (itemName) => {
     // Cambiar la sección activa
     setActiveSection(itemName)
+
+    // Resetear filtro cuando se hace clic directo en el botón principal
+    if (setSelectedFilter) {
+      setSelectedFilter(null)
+    }
 
     // Hacer scroll suave al inicio de la página
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -60,7 +76,16 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 
   const handleDropdownItemClick = (parentMenu, item) => {
     console.log(`Clicked ${item} from ${parentMenu}`)
+
+    // Cambiar la sección activa
     setActiveSection(parentMenu)
+
+    // Establecer el filtro según la asignatura seleccionada
+    if (setSelectedFilter) {
+      const mappedSubject = subjectMapping[item] || item
+      setSelectedFilter(mappedSubject)
+    }
+
     setHoveredMenu(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }

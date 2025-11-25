@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import { Filter, BookOpen, GraduationCap, FileText } from 'lucide-react';
 import FilterSidebar from './FilterSidebar';
 
-const ResourceViewer = ({ viewMode = 'fichas' }) => {
-  const [selectedCategory, setSelectedCategory] = useState('Todas');
+const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null }) => {
+  const [selectedCategory, setSelectedCategory] = useState(initialFilter || 'Todas');
   const [selectedGrade, setSelectedGrade] = useState('Todos');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState({});
   const [sortBy, setSortBy] = useState('popular');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Actualizar el filtro cuando cambia initialFilter
+  React.useEffect(() => {
+    if (initialFilter) {
+      setSelectedCategory(initialFilter);
+    }
+  }, [initialFilter]);
 
   // Configuración según el modo de vista
   const viewConfig = {
