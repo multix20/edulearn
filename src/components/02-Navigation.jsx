@@ -37,26 +37,14 @@ const Navigation = ({ activeSection, setActiveSection }) => {
               <button
                 key={index}
                 onClick={() => handleMenuClick(item.name)}
-                className={`group relative flex items-center gap-2 px-4 lg:px-6 py-3 rounded-xl font-semibold text-sm lg:text-base transition-all duration-300 ${
+                className={`flex items-center gap-2 px-4 lg:px-6 py-3 rounded-xl font-semibold text-sm lg:text-base transition-colors duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-500/30 scale-105'
-                    : 'text-gray-700 hover:bg-gradient-to-r hover:from-violet-50 hover:to-purple-50 hover:text-violet-700 hover:scale-105'
+                    ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
+                    : 'text-gray-700 hover:bg-violet-50 hover:text-violet-700'
                 }`}
               >
-                <Icon className={`w-4 h-4 lg:w-5 lg:h-5 transition-transform duration-300 ${
-                  isActive ? '' : 'group-hover:rotate-12'
-                }`} />
+                <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
                 <span>{item.name}</span>
-
-                {/* Indicador de activo */}
-                {isActive && (
-                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-1 bg-white rounded-full"></div>
-                )}
-
-                {/* Efecto hover */}
-                {!isActive && (
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600/0 to-purple-600/0 group-hover:from-violet-600/5 group-hover:to-purple-600/5 transition-all duration-300"></div>
-                )}
               </button>
             )
           })}
@@ -84,7 +72,7 @@ const Navigation = ({ activeSection, setActiveSection }) => {
 
           {/* Mobile Menu Dropdown */}
           {isMenuOpen && (
-            <div className="pb-4 space-y-2 animate-in slide-in-from-top-2 duration-300">
+            <div className="pb-4 space-y-2">
               {menuItems.map((item, index) => {
                 const Icon = item.icon
                 const isActive = activeSection === item.name
@@ -92,18 +80,15 @@ const Navigation = ({ activeSection, setActiveSection }) => {
                 return (
                   <button
                     key={index}
-                    className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                    className={`w-full flex items-center gap-3 px-4 py-4 rounded-xl font-semibold text-sm transition-colors duration-200 ${
                       isActive
-                        ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg'
-                        : 'bg-white text-gray-700 hover:bg-gradient-to-r hover:from-violet-50 hover:to-purple-50 hover:text-violet-700 border-2 border-gray-100'
+                        ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
+                        : 'bg-white text-gray-700 hover:bg-violet-50 hover:text-violet-700 border border-gray-200'
                     }`}
                     onClick={() => handleMenuClick(item.name)}
                   >
                     <Icon className="w-5 h-5" />
                     <span className="flex-1 text-left">{item.name}</span>
-                    {isActive && (
-                      <div className="w-2 h-2 rounded-full bg-white"></div>
-                    )}
                   </button>
                 )
               })}

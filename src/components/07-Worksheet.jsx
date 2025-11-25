@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { Filter } from 'lucide-react';
+import FilterSidebar from './FilterSidebar';
 
 const Worksheet = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todas');
   const [selectedGrade, setSelectedGrade] = useState('Todos');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [activeFilters, setActiveFilters] = useState({});
 
   const categories = [
     { name: 'Todas', icon: '📚', color: 'violet' },
@@ -117,10 +121,39 @@ const Worksheet = () => {
     return colors[color] || colors.violet;
   };
 
+  const handleFilterChange = (section, item) => {
+    if (section === 'clearAll') {
+      setActiveFilters({});
+      return;
+    }
+
+    setActiveFilters(prev => {
+      const currentFilters = prev[section] || [];
+      const isActive = currentFilters.includes(item);
+
+      return {
+        ...prev,
+        [section]: isActive
+          ? currentFilters.filter(f => f !== item)
+          : [...currentFilters, item]
+      };
+    });
+  };
+
   return (
     <div id="worksheet" className="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
-      {/* Contenedor principal */}
-      <div className="max-w-7xl mx-auto">
+      {/* Contenedor principal con sidebar */}
+      <div className="flex gap-6 max-w-[1600px] mx-auto">
+        {/* Sidebar de Filtros */}
+        <FilterSidebar
+          isOpen={isFilterOpen}
+          onClose={() => setIsFilterOpen(false)}
+          activeFilters={activeFilters}
+          onFilterChange={handleFilterChange}
+        />
+
+        {/* Contenido Principal */}
+        <div className="flex-1 min-w-0">
 
         {/* Encabezado mejorado para profesores */}
         <div className="text-center mb-10">
@@ -397,6 +430,16 @@ const Worksheet = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Botón flotante para abrir filtros en móvil */}
+        <button
+          onClick={() => setIsFilterOpen(true)}
+          className="md:hidden fixed bottom-6 right-6 bg-violet-600 text-white p-4 rounded-full shadow-lg hover:bg-violet-700 transition-colors z-30"
+        >
+          <Filter className="w-6 h-6" />
+        </button>
+
         </div>
       </div>
     </div>
