@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 import { Filter, BookOpen, GraduationCap, FileText, ChevronRight, Home, X } from 'lucide-react';
 import FilterSidebar from './FilterSidebar';
 
-const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null }) => {
+const ResourceViewer = ({ viewMode = 'fichas', initialFilter = null, user = null }) => {
   const [selectedCategory, setSelectedCategory] = useState(initialFilter || 'Todas');
   const [selectedGrade, setSelectedGrade] = useState('Todos');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState({});
   const [sortBy, setSortBy] = useState('popular');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Determinar límite de fichas según el tipo de usuario
+  const getWorksheetLimit = () => {
+    if (!user) return 10; // No registrado
+    if (user.isPremium) return Infinity; // Premium: sin límite
+    return 20; // Registrado free
+  };
+
+  const worksheetLimit = getWorksheetLimit();
 
   // Actualizar el filtro cuando cambia initialFilter
   React.useEffect(() => {
