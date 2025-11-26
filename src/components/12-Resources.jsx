@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Sparkles, Download, FileText, Video, Headphones, Image, BookOpen } from 'lucide-react';
+import EmailCaptureModal from './EmailCaptureModal';
 
 const Resources = () => {
   const [selectedType, setSelectedType] = useState('Todos');
+  const [selectedResource, setSelectedResource] = useState(null);
+  const [showEmailModal, setShowEmailModal] = useState(false);
 
   const resourceTypes = [
     { name: 'Todos', icon: Sparkles, count: 245 },
@@ -140,6 +143,11 @@ const Resources = () => {
       badge: null
     }
   ];
+
+  const handleDownloadClick = (resource) => {
+    setSelectedResource(resource);
+    setShowEmailModal(true);
+  };
 
   const getColorClasses = (color) => {
     const colors = {
@@ -292,7 +300,10 @@ const Resources = () => {
                 </div>
 
                 {/* Download Button */}
-                <button className={`w-full py-3 bg-gradient-to-r ${getColorClasses(resource.color)} text-white rounded-xl font-bold shadow-md hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group-hover:scale-105`}>
+                <button
+                  onClick={() => handleDownloadClick(resource)}
+                  className={`w-full py-3 bg-gradient-to-r ${getColorClasses(resource.color)} text-white rounded-xl font-bold shadow-md hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group-hover:scale-105`}
+                >
                   <Download className="w-5 h-5" />
                   <span>Descargar</span>
                 </button>
@@ -322,6 +333,16 @@ const Resources = () => {
           </button>
         </div>
       </div>
+
+      {/* Modal de captura de email */}
+      <EmailCaptureModal
+        ficha={selectedResource}
+        isOpen={showEmailModal}
+        onClose={() => {
+          setShowEmailModal(false);
+          setSelectedResource(null);
+        }}
+      />
     </div>
   );
 };
