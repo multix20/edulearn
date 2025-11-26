@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, Download, Mail, CheckCircle, User } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+
 const EmailCaptureModal = ({ ficha, isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [nombre, setNombre] = useState('');
@@ -25,7 +27,7 @@ const EmailCaptureModal = ({ ficha, isOpen, onClose }) => {
   const handleAutoDownload = async (savedEmail) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:4000/api/download/capture', {
+      const response = await fetch(`${API_URL}/api/download/capture`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -73,7 +75,7 @@ const EmailCaptureModal = ({ ficha, isOpen, onClose }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:4000/api/download/capture', {
+      const response = await fetch(`${API_URL}/api/download/capture`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
